@@ -5,8 +5,16 @@ This Quick Start tutorial features code generation in Java. Go to the
 are interested in hands-on C++ with zserio.
 
 You find the complete tutorial in this example. To follow along the description just clone the repo and check
-the sources. For convenience and compatibility reasons we have included the runtime in this repository,
-although we describe how to obtain it below.
+the sources. For convenience and compatibility reasons, we have included the zserio.jar compiler version 1.0 and
+the corresponded runtime in this repository. The zserio compiler is located in the project's root folder and
+the runtime library is in subfolder `3rdparty`.
+
+The latest build of the zserio compiler and runtime library can be get from
+[Zserio Releases](https://github.com/welovemaps/zserio/releases).
+
+If you want to  build from source, please follow the
+[Build Instructions for Zserio Compiler](https://github.com/welovemaps/doc/zserio-compiler.md).
+
 
 ## Installation & Prerequisites
 
@@ -14,19 +22,22 @@ Before we start, make sure you have the following components installed:
 
 - JAVA JDK
 
-The easiest way of compiling the schema is to download the latest build of the zserio compiler from
-[Zserio Releases](https://github.com/welovemaps/zserio/releases).
+## Set up dev environment
 
-If you want to  build from source, please follow the
-[Build Instructions for Zserio Compiler](https://github.com/welovemaps/doc/zserio-compiler.md).
-
-## Set up dev environment and zserio runtime
+> Everything has been already set up for you in this repository. If you are very impatient, just go to the
+> project's root folder and have a quick look to the schema `tutorial.zs`. Then, run the following commands:
+>
+> ```
+> mkdir build
+> javac -d build -cp 3rdparty/runtime/zserio_runtime.jar src/Main.java src/**/*.java
+> ```
+>
+> Now, start to play with tutorial executable using the command:
+>
+> `java -cp 3rdparty/runtime/zserio_runtime.jar:build Main`
 
 We start with a common layout of our project/repo where we put all the source files into a `src` folder and all
 3rd party stuff into `3rdparty`. For simplicity the zserio schema file stays in the project's root folder.
-
-Download the latest Java runtime from [Zserio Releases](https://github.com/welovemaps/zserio/releases) and store
-it into a `runtime` subfolder in `3rdparty`.
 
 So our folder structure looks like this:
 
@@ -163,11 +174,9 @@ We now have everything ready to serialize and deserialize our data.
 Before we start programming, let's have compile our project:
 
 ```
+mkdir build
 javac -d build -cp 3rdparty/runtime/zserio_runtime.jar src/Main.java src/**/*.java
 ```
-
-> If you are already impatient, just run command `java -cp 3rdparty/runtime/zserio_runtime.jar:build Main` now
-> and start to play with tutorial executable.
 
 Then open up your favorite IDE and start using the zserio classes by importing the classes from the schema
 and zserio runtime that we want to use.
