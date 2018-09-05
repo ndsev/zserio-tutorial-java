@@ -1,7 +1,7 @@
 # Zserio Java Quick Start Tutorial
 
 This Quick Start tutorial features code generation in Java. Go to the
-[Zserio C++ tutorial](https://github.com/welovemaps/zserio-tutorial-cpp#zserio-c-quick-start-tutorial) if you
+[Zserio C++ tutorial](https://github.com/ndsev/zserio-tutorial-cpp#zserio-c-quick-start-tutorial) if you
 are interested in hands-on C++ with zserio.
 
 You find the complete tutorial in this example. To follow along the description just clone the repo and check
@@ -10,10 +10,10 @@ the corresponded runtime in this repository. The zserio compiler is located in t
 the runtime library is in subfolder `3rdparty`.
 
 The latest build of the zserio compiler and runtime library can be get from
-[Zserio Releases](https://github.com/welovemaps/zserio/releases).
+[Zserio Releases](https://github.com/ndsev/zserio/releases).
 
 If you want to  build from source, please follow the
-[Build Instructions for Zserio Compiler](https://github.com/welovemaps/doc/zserio-compiler.md).
+[Build Instructions for Zserio Compiler](https://github.com/ndsev/doc/zserio-compiler.md).
 
 
 ## Installation & Prerequisites
@@ -100,7 +100,7 @@ We have added some of zserio's features above. Let's quickly take a look:
 
   Although the `uint8` of field `age` would allow values up to 255, we limit the use already in the schema
   definition by using
-  a [constraint](https://github.com/welovemaps/zserio/blob/master/doc/ZserioLanguageOverview.md#constraints).
+  a [constraint](https://github.com/ndsev/zserio/blob/master/doc/ZserioLanguageOverview.md#constraints).
   If we try to write values larger than 65, the generated writers will throw an exception.
 
 - **Optional fields**
@@ -108,7 +108,7 @@ We have added some of zserio's features above. Let's quickly take a look:
   The `bonus` field is prefixed with the keyword `optional` which will add a invisible 1-bit bool before that
   field which indicating whether the field exists. If it is not set then only one bit will be added to the bit
   stream. See
-  [Zserio Invisibles](https://github.com/welovemaps/zserio/blob/master/doc/ZserioInvisibles.md#optional-keyword)
+  [Zserio Invisibles](https://github.com/ndsev/zserio/blob/master/doc/ZserioInvisibles.md#optional-keyword)
   for more information.
 
 - **Conditions**
@@ -121,7 +121,7 @@ We have added some of zserio's features above. Let's quickly take a look:
   2 bits for the enum `Language`.
 
 For more details on the features of zserio head over to the
-[Zserio Language Overview](https://github.com/welovemaps/zserio/blob/master/doc/ZserioLanguageOverview.md).
+[Zserio Language Overview](https://github.com/ndsev/zserio/blob/master/doc/ZserioLanguageOverview.md).
 
 We now save the file to disk as `tutorial.zs`.
 
@@ -132,10 +132,10 @@ We now save the file to disk as `tutorial.zs`.
 ## Compiling and generating code
 
 Now we are ready to compile the schema with the zserio compiler. The zserio compiler checks the schema file and
-its [imported files](https://github.com/welovemaps/zserio/blob/master/doc/ZserioLanguageOverview.md#packages-and-imports)
+its [imported files](https://github.com/ndsev/zserio/blob/master/doc/ZserioLanguageOverview.md#packages-and-imports)
 and reports errors and warnings. In addition, the zserio compiler generates code for the supported languages
 and may generate HTML documentation. For a complete overview of available options, please refer to the
-[Zserio Compiler User Guide](https://github.com/welovemaps/zserio/blob/master/doc/ZserioCompilerUserGuide.md).
+[Zserio Compiler User Guide](https://github.com/ndsev/zserio/blob/master/doc/ZserioCompilerUserGuide.md).
 
 So let's generate some Java code:
 
@@ -239,7 +239,7 @@ joe.setSkills(new ObjectArray<Experience>(skills));
 
 Class 'ObjectArray' is zserio object array from runtime library. You can find a full list of available zserio
 arrays in the
-[Zserio Java API overview](https://github.com/welovemaps/zserio/blob/master/doc/ZserioJavaAPI.md).
+[Zserio Java API overview](https://github.com/ndsev/zserio/blob/master/doc/ZserioJavaAPI.md).
 
 After we have set all the fields, we have to declare a FileBitStreamWriter and write the stream to the file:
 
