@@ -17,7 +17,7 @@ public class Main
 {
     private static void printHelp()
     {
-        System.out.println("Usage: [write_joe] [write_boss] [read]");
+        System.out.println("Usage: Main write_joe|write_boss|read");
     }
 
     private static void writeJoe(File employeeFile) throws ZserioError, IOException
@@ -105,7 +105,7 @@ public class Main
             {
                 final byte years = experience.getYearsOfExperience();
                 final Language language = experience.getProgrammingLanguage();
-                System.out.println("Skill: Language " + language + ", " + years);
+                System.out.println("Skill: Language " + language + ", " + years + " years");
             }
         }
 

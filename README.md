@@ -1,10 +1,11 @@
 # Zserio Java Quick Start Tutorial
 
 This Quick Start tutorial features code generation in Java. Go to the
-[Zserio C++ tutorial](https://github.com/ndsev/zserio-tutorial-cpp#zserio-c-quick-start-tutorial) if you
-are interested in hands-on C++ with zserio.
+[Zserio C++ tutorial](https://github.com/ndsev/zserio-tutorial-cpp#zserio-c-quick-start-tutorial) or
+[Zserio Python tutorial](https://github.com/ndsev/zserio-tutorial-python#zserio-python-quick-start-tutorial) if
+you are interested in hands-on C++ or Python with zserio.
 
-You find the complete tutorial in this example. To follow along the description just clone the repo and check
+You find the complete tutorial in this example. To follow along the description just clone this repo and check
 the sources. For convenience and compatibility reasons, we have included the zserio.jar compiler version 1.0 and
 the corresponded runtime in this repository. The zserio compiler is located in the project's root folder and
 the runtime library is in subfolder `3rdparty`.
@@ -12,14 +13,14 @@ the runtime library is in subfolder `3rdparty`.
 The latest build of the zserio compiler and runtime library can be get from
 [Zserio Releases](https://github.com/ndsev/zserio/releases).
 
-If you want to  build from source, please follow the
+If you want to build from source, please follow the
 [Zserio Compiler Build Instructions](https://github.com/ndsev/zserio/blob/master/doc/ZserioBuildInstructions.md#zserio-compiler-build-instructions).
 
 ## Installation & Prerequisites
 
 Before we start, make sure you have the following components installed:
 
-- JAVA JDK
+- Java JDK
 
 ## Set up dev environment
 
@@ -230,7 +231,7 @@ Experience skill2 = new Experience((byte) 4, Language.PYTHON);
 skills.add(skill2);
 ```
 
-Don't forget to set Joe's experience:
+Don't forget to set Joe's skills:
 
 ```java
 joe.setSkills(new ObjectArray<Experience>(skills));
@@ -314,7 +315,7 @@ There are some other features that we used in the code in this repo that we woul
 ### Zserio runtime exceptions
 
 The zserio runtime throws two exceptions. The `zserio.runtime.ZserioError` and the `java.io.IOException`.
- 
+
 It makes sense to try-catch all of your writes and reads as we do in our tutorial:
 
 ```java
