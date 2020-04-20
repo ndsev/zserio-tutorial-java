@@ -1,0 +1,68 @@
+<!--
+
+Ant build.xml for Java Zserio Tutorial to download the latest Zserio release and regenerate Java sources.
+
+-->
+<project name="zserio_tutorial_java" basedir="." default="regenerate_java_sources">
+    <dirname property="zserio_tutorial_java.base_dir" file="${ant.file.zserio_tutorial_java}"/>
+
+    <property name="zserio_tutorial_java.build_dir" value="${zserio_tutorial_java.base_dir}/build"/>
+    <property name="zserio_tutorial_java.download_dir" value="${zserio_tutorial_java.build_dir}/download"/>
+    <property name="zserio_tutorial_java.src_dir" value="${zserio_tutorial_java.base_dir}/src"/>
+    <property name="zserio_tutorial_java.runtime_dir"
+        value="${zserio_tutorial_java.base_dir}/3rdparty/runtime"/>
+
+    <target name="download_zserio">
+        <mkdir dir="${zserio_tutorial_java.download_dir}"/>
+        
+        <property name="latest_release_json_full_name"
+            value="${zserio_tutorial_java.download_dir}/latest_release.json"/>
+        <get src="https://api.github.com/repos/ndsev/zserio/releases/latest"
+            dest="${latest_release_json_full_name}" usetimestamp="true"/>
+        
+        <loadfile encoding="UTF-8" property="latest_zserio_version" srcFile="${latest_release_json_full_name}">
+            <filterchain>
+                <striplinebreaks/>
+                <tokenfilter>
+                    <replaceregex pattern='.*"tag_name"\s*:\s*"v([0-9\.]+)".*' replace="\1"/>
+                </tokenfilter>
+            </filterchain>
+        </loadfile>
+        
+        <property name="github_https_download" value="https://github.com/ndsev/zserio/releases/download"/>
+        <property name="zserio_bin_zip_name" value="zserio-${latest_zserio_version}-bin.zip"/>
+        <property name="zserio_bin_zip_full_name"
+            value="${zserio_tutorial_java.download_dir}/${zserio_bin_zip_name}"/>
+        <get src="${github_https_download}/v${latest_zserio_version}/${zserio_bin_zip_name}"
+            dest="${zserio_bin_zip_full_name}" usetimestamp="true"/>
+        <unzip src="${zserio_bin_zip_full_name}" dest="${zserio_tutorial_java.download_dir}"/>
+        
+        <property name="zserio_runtime_libs_zip_name" value="zserio-${latest_zserio_version}-runtime-libs.zip"/>
+        <property name="zserio_runtime_libs_zip_full_name"
+            value="${zserio_tutorial_java.download_dir}/${zserio_runtime_libs_zip_name}"/>
+        <get src="${github_https_download}/v${latest_zserio_version}/${zserio_runtime_libs_zip_name}"
+            dest="${zserio_runtime_libs_zip_full_name}" usetimestamp="true"/>
+        <unzip src="${zserio_runtime_libs_zip_full_name}" dest="${zserio_tutorial_java.download_dir}"/>
+    </target>
+
+    <target name="update_zserio_runtime" depends="download_zserio">
+        <mkdir dir="${zserio_tutorial_java.runtime_dir}"/>
+        <copy todir="${zserio_tutorial_java.runtime_dir}">
+            <fileset dir="${zserio_tutorial_java.download_dir}/runtime_libs/java"/>
+        </copy>        
+    </target>
+    
+    <target name="regenerate_java_sources" depends="update_zserio_runtime">
+        <taskdef name="zserio" classpath="${zserio_tutorial_java.download_dir}/ant_task/zserio_ant.jar"
+            classname="zserio.ant.ZserioTask"/>
+        <zserio srcPath="${zserio_tutorial_java.base_dir}" srcFile="tutorial.zs"
+            java="${zserio_tutorial_java.src_dir}">
+            <classpath>
+                <fileset dir="${zserio_tutorial_java.download_dir}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+            <arg name="javaVersion" value="1.8"/>
+        </zserio>
+    </target>
+</project>

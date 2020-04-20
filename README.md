@@ -21,6 +21,7 @@ If you want to build from source, please follow the
 Before we start, make sure you have the following components installed:
 
 - Java JDK
+- Apache Ant
 
 ## Set up dev environment
 
@@ -137,10 +138,19 @@ and reports errors and warnings. In addition, the zserio compiler generates code
 and may generate HTML documentation. For a complete overview of available options, please refer to the
 [Zserio Compiler User Guide](https://github.com/ndsev/zserio/blob/master/doc/ZserioUserGuide.md#zserio-compiler-user-guide).
 
-So let's generate some Java code:
+So let's generate some Java code. Because zserio compiler is not available in this repository, we have 
+prepared `build.xml` which will download the latest zserio compiler release together with corresponded Java
+runtime library from GitHub and generate Java code. So, it's enough just to run the following command:
 
 ```
-java -jar zserio.jar -java src tutorial.zs
+ant
+```
+
+After download, you can find out the latest zserio compiler in directory `build/download` and regenerate
+the Java code by hand using the command:
+
+```
+java -jar build/download/zserio.jar -java src tutorial.zs
 ```
 
 This command generates Java code and puts it into the `src` folder. It actually creates subfolders for each
