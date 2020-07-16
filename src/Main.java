@@ -118,40 +118,43 @@ public class Main
         if (args.length != 1)
         {
             printHelp();
+            System.exit(2);
         }
-        else
+
+        final File employeeFile = new File("employee.zsb");
+        try
         {
-            final File employeeFile = new File("employee.zsb");
-            try
+            if (args[0].equals("write_joe"))
             {
-                if (args[0].equals("write_joe"))
-                {
-                    /* writing an employee 'Joe' to file */
-                    writeJoe(employeeFile);
-                }
-                else if (args[0].equals("write_boss"))
-                {
-                    /* writing an employee 'Boss' to file */
-                    writeBoss(employeeFile);
-                }
-                else if (args[0].equals("read"))
-                {
-                    /* reading an employee from file */
-                    readEmployee(employeeFile);
-                }
-                else
-                {
-                    printHelp();
-                }
+                /* writing an employee 'Joe' to file */
+                writeJoe(employeeFile);
             }
-            catch (ZserioError e)
+            else if (args[0].equals("write_boss"))
             {
-                System.out.println("ZserioError caught: " + e.getMessage());
+                /* writing an employee 'Boss' to file */
+                writeBoss(employeeFile);
             }
-            catch (IOException e)
+            else if (args[0].equals("read"))
             {
-                System.out.println("IOException caught: " + e.getMessage());
+                /* reading an employee from file */
+                readEmployee(employeeFile);
             }
+            else
+            {
+                printHelp();
+                if (!args[0].equals("-h") && !args[0].equals("--help"))
+                    System.exit(2);
+            }
+        }
+        catch (ZserioError e)
+        {
+            System.out.println("ZserioError caught: " + e.getMessage());
+            System.exit(1);
+        }
+        catch (IOException e)
+        {
+            System.out.println("IOException caught: " + e.getMessage());
+            System.exit(1);
         }
     }
 };

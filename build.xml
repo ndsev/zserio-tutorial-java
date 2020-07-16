@@ -14,12 +14,12 @@ Ant build.xml for Java Zserio Tutorial to download the latest Zserio release and
 
     <target name="download_zserio">
         <mkdir dir="${zserio_tutorial_java.download_dir}"/>
-        
+
         <property name="latest_release_json_full_name"
             value="${zserio_tutorial_java.download_dir}/latest_release.json"/>
         <get src="https://api.github.com/repos/ndsev/zserio/releases/latest"
             dest="${latest_release_json_full_name}" usetimestamp="true"/>
-        
+
         <loadfile encoding="UTF-8" property="latest_zserio_version" srcFile="${latest_release_json_full_name}">
             <filterchain>
                 <striplinebreaks/>
@@ -28,7 +28,7 @@ Ant build.xml for Java Zserio Tutorial to download the latest Zserio release and
                 </tokenfilter>
             </filterchain>
         </loadfile>
-        
+
         <property name="github_https_download" value="https://github.com/ndsev/zserio/releases/download"/>
         <property name="zserio_bin_zip_name" value="zserio-${latest_zserio_version}-bin.zip"/>
         <property name="zserio_bin_zip_full_name"
@@ -36,7 +36,7 @@ Ant build.xml for Java Zserio Tutorial to download the latest Zserio release and
         <get src="${github_https_download}/v${latest_zserio_version}/${zserio_bin_zip_name}"
             dest="${zserio_bin_zip_full_name}" usetimestamp="true"/>
         <unzip src="${zserio_bin_zip_full_name}" dest="${zserio_tutorial_java.download_dir}"/>
-        
+
         <property name="zserio_runtime_libs_zip_name" value="zserio-${latest_zserio_version}-runtime-libs.zip"/>
         <property name="zserio_runtime_libs_zip_full_name"
             value="${zserio_tutorial_java.download_dir}/${zserio_runtime_libs_zip_name}"/>
@@ -49,9 +49,9 @@ Ant build.xml for Java Zserio Tutorial to download the latest Zserio release and
         <mkdir dir="${zserio_tutorial_java.runtime_dir}"/>
         <copy todir="${zserio_tutorial_java.runtime_dir}">
             <fileset dir="${zserio_tutorial_java.download_dir}/runtime_libs/java"/>
-        </copy>        
+        </copy>
     </target>
-    
+
     <target name="regenerate_java_sources" depends="update_zserio_runtime">
         <taskdef name="zserio" classpath="${zserio_tutorial_java.download_dir}/ant_task/zserio_ant.jar"
             classname="zserio.ant.ZserioTask"/>
@@ -62,7 +62,6 @@ Ant build.xml for Java Zserio Tutorial to download the latest Zserio release and
                     <include name="*.jar"/>
                 </fileset>
             </classpath>
-            <arg name="javaVersion" value="1.8"/>
         </zserio>
     </target>
 </project>
