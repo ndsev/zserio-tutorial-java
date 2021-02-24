@@ -308,7 +308,7 @@ System.out.println("Salary: " + employee.getSalary());
 System.out.println("Role: " + employee.getRole());
 
 /* we have to check for optionals whether they are in the stream */
-if (employee.hasBonus())
+if (employee.isBonusUsed())
     System.out.println("Bonus: " + employee.getBonus());
 ```
 

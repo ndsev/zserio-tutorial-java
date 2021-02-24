@@ -95,11 +95,11 @@ public class Main
         System.out.println("Role: " + employee.getRole());
 
         /* we have to check for optionals whether they are in the stream */
-        if (employee.hasBonus())
+        if (employee.isBonusUsed())
             System.out.println("Bonus: " + employee.getBonus());
 
         /* we also have to check for conditions if they applied */
-        if (employee.hasSkills())
+        if (employee.isSkillsUsed())
         {
             for (Experience experience : employee.getSkills())
             {
