@@ -113,7 +113,7 @@ We have added some of zserio's features above. Let's quickly take a look:
 
 - **Conditions**
 
-    We add programming skills only if the employee is developer.
+  We add programming skills only if the employee is developer.
 
 - **Bit sized elements**
 
@@ -192,7 +192,6 @@ and zserio runtime that we want to use.
 
 ```java
 import zserio.runtime.ZserioError;
-import zserio.runtime.array.ObjectArray;
 import zserio.runtime.io.FileBitStreamReader;
 import zserio.runtime.io.FileBitStreamWriter;
 
@@ -209,7 +208,7 @@ Let's declare an employee Joe and fill in some data:
 final Employee joe = new Employee();
 
 /* fill some basic type fields */
-joe.setAge((short) 32);
+joe.setAge((short)32);
 joe.setName("Joe Smith");
 joe.setSalary(5000);
 
@@ -217,38 +216,22 @@ joe.setSalary(5000);
 joe.setRole(Role.DEVELOPER);
 ```
 
-To be able to populate a list of skills, we need to declare a `ArrayList` object of type Experience:
+To be able to populate a list of skills, we need to declare and fill an array with element of type Experience.
+Let's generate two entries for the skills list. First we add C++ experience and then also some Python
+experience:
 
 ```java
-final List<Experience> skills = new ArrayList<Experience>();
-```
-
-So now let's generate two entries for the skills list:
-
-First we add C++ experience:
-
-```java
-Experience skill1 = new Experience((byte) 8, Language.CPP);
-skills.add(skill1);
-```
-
-and then also some Python experience:
-
-
-```java
-Experience skill2 = new Experience((byte) 4, Language.PYTHON);
-skills.add(skill2);
+final Experience skills[] = new Experience[] {
+                new Experience((byte) 8, Language.CPP),
+                new Experience((byte) 4, Language.PYTHON)
+        };
 ```
 
 Don't forget to set Joe's skills:
 
 ```java
-joe.setSkills(new ObjectArray<Experience>(skills));
+joe.setSkills(skills);
 ```
-
-Class 'ObjectArray' is zserio object array from runtime library. You can find a full list of available zserio
-arrays in the
-[Zserio Java API overview](https://github.com/ndsev/zserio/blob/master/doc/ZserioJavaAPI.md).
 
 After we have set all the fields, we have to declare a FileBitStreamWriter and write the stream to the file:
 

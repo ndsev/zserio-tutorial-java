@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import zserio.runtime.ZserioError;
-import zserio.runtime.array.ObjectArray;
 import zserio.runtime.io.FileBitStreamReader;
 import zserio.runtime.io.FileBitStreamWriter;
 
@@ -26,26 +25,21 @@ public class Main
         final Employee joe = new Employee();
 
         /* fill some basic type fields */
-        joe.setAge((short) 32);
+        joe.setAge((short)32);
         joe.setName("Joe Smith");
         joe.setSalary(5000);
 
         /* set an enum value, in this case the role */
         joe.setRole(Role.DEVELOPER);
 
-        /* declare a list which holds a zserio struct */
-        final List<Experience> skills = new ArrayList<Experience>();
-
-        /* declare and fill the struct Experience */
-        Experience skill1 = new Experience((byte) 8, Language.CPP);
-        skills.add(skill1);
-
-        /* fill a second one... */
-        Experience skill2 = new Experience((byte) 4, Language.PYTHON);
-        skills.add(skill2);
+        /* declare an array which holds a zserio struct */
+        final Experience skills[] = new Experience[] {
+                new Experience((byte) 8, Language.CPP),
+                new Experience((byte) 4, Language.PYTHON)
+        };
 
         /* assign the zserio object array to object joe */
-        joe.setSkills(new ObjectArray<Experience>(skills));
+        joe.setSkills(skills);
 
         /* declare a zserio FileBitStreamWriter */
         final FileBitStreamWriter writer = new FileBitStreamWriter(employeeFile);
