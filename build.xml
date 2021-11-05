@@ -47,7 +47,7 @@ Ant build.xml for Java Zserio Tutorial to download the latest Zserio release and
 
     <target name="update_zserio_runtime" depends="download_zserio">
         <mkdir dir="${zserio_tutorial_java.runtime_dir}"/>
-        <copy todir="${zserio_tutorial_java.runtime_dir}">
+        <copy todir="${zserio_tutorial_java.runtime_dir}" overwrite="true">
             <fileset dir="${zserio_tutorial_java.download_dir}/runtime_libs/java"/>
         </copy>
     </target>
