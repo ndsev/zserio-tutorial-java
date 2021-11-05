@@ -55,8 +55,7 @@ Ant build.xml for Java Zserio Tutorial to download the latest Zserio release and
     <target name="regenerate_java_sources" depends="update_zserio_runtime">
         <taskdef name="zserio" classpath="${zserio_tutorial_java.download_dir}/ant_task/zserio_ant.jar"
             classname="zserio.ant.ZserioTask"/>
-        <!-- TODO[mikir]: Remove extraArgs as soon as Ant task is fixed in the next release! -->
-        <zserio srcPath="${zserio_tutorial_java.base_dir}" srcFile="tutorial.zs" extraArgs="">
+        <zserio srcPath="${zserio_tutorial_java.base_dir}" srcFile="tutorial.zs">
             <arg name="java" value="${zserio_tutorial_java.src_dir}"/>
             <classpath>
                 <fileset dir="${zserio_tutorial_java.download_dir}">
