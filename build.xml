@@ -22,6 +22,8 @@ Ant build.xml for Java Zserio Tutorial to download the latest Zserio release and
             <arg value="-DoutputDirectory=${zserio_tutorial_java.build_dir}"/>
             <arg value="-Dmdep.stripVersion=true"/>
         </exec>
+        <move file="${zserio_tutorial_java.build_dir}/zserio-runtime.jar"
+                tofile="${zserio_tutorial_java.build_dir}/zserio_runtime.jar"/>
 
         <exec executable="${maven.executable}" failonerror="true">
             <arg value="dependency:copy"/>
