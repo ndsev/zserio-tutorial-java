@@ -21,6 +21,7 @@ Before we start, make sure you have the following components installed:
 
 - Java JDK
 - Apache Ant
+- Apache Maven
 
 ## Set up dev environment
 
@@ -28,25 +29,16 @@ Before we start, make sure you have the following components installed:
 > project's root folder and have a quick look to the schema `tutorial.zs`. Then, run the following commands:
 >
 > ```
-> mkdir build
-> javac -d build -cp 3rdparty/runtime/zserio_runtime.jar src/Main.java src/**/*.java
+> ant download_zserio
+> javac -d build -cp build/zserio_runtime.jar src/Main.java src/**/*.java
 > ```
 >
 > Now, start to play with tutorial executable using the command:
 >
-> `java -cp 3rdparty/runtime/zserio_runtime.jar:build Main`
+> `java -cp build/zserio_runtime.jar:build Main`
 
-We start with a common layout of our project/repo where we put all the source files into a `src` folder and all
-3rd party stuff into `3rdparty`. For simplicity the zserio schema file stays in the project's root folder.
-
-So our folder structure looks like this:
-
-```
-.
-├───3rdparty
-│   └───runtime
-└───src
-```
+We start with a common layout of our project/repo where we put all the source files into a `src` folder.
+For simplicity the zserio schema file stays in the project's root folder.
 
 Now we only need to generate the code, populate the Main.java and we are done.
 
@@ -139,17 +131,18 @@ and may generate HTML documentation. For a complete overview of available option
 
 So let's generate some Java code. Because zserio compiler is not available in this repository, we have 
 prepared `build.xml` which will download the latest zserio compiler release together with corresponded Java
-runtime library from GitHub and generate Java code. So, it's enough just to run the following command:
+runtime library from Maven central repository and generate Java code. So, it's enough just to run the following
+command:
 
 ```
 ant
 ```
 
-After download, you can find out the latest zserio compiler in directory `build/download` and regenerate
+After download, you can find out the latest zserio compiler in directory `build` and regenerate
 the Java code by hand using the command:
 
 ```
-java -jar build/download/zserio.jar -java src tutorial.zs
+java -jar build/zserio.jar -java src tutorial.zs
 ```
 
 This command generates Java code and puts it into the `src` folder. It actually creates subfolders for each
@@ -159,8 +152,6 @@ So after generating the code our folder structure looks like this:
 
 ```
 .
-├───3rdparty
-│   └───runtime
 └───src
     └───tutorial
 ```
@@ -183,8 +174,7 @@ We now have everything ready to serialize and deserialize our data.
 Before we start programming, let's have compile our project:
 
 ```
-mkdir build
-javac -d build -cp 3rdparty/runtime/zserio_runtime.jar src/Main.java src/**/*.java
+javac -d build -cp build/zserio_runtime.jar src/Main.java src/**/*.java
 ```
 
 Then open up your favorite IDE and start using the zserio classes by importing the classes from the schema

@@ -9,59 +9,34 @@ Ant build.xml for Java Zserio Tutorial to download the latest Zserio release and
     <property name="zserio_tutorial_java.build_dir" value="${zserio_tutorial_java.base_dir}/build"/>
     <property name="zserio_tutorial_java.download_dir" value="${zserio_tutorial_java.build_dir}/download"/>
     <property name="zserio_tutorial_java.src_dir" value="${zserio_tutorial_java.base_dir}/src"/>
-    <property name="zserio_tutorial_java.runtime_dir"
-        value="${zserio_tutorial_java.base_dir}/3rdparty/runtime"/>
+
+    <property name="maven.executable" value="mvn"/>
 
     <target name="download_zserio">
         <mkdir dir="${zserio_tutorial_java.download_dir}"/>
 
-        <property name="latest_release_json_full_name"
-            value="${zserio_tutorial_java.download_dir}/latest_release.json"/>
-        <get src="https://api.github.com/repos/ndsev/zserio/releases/latest"
-            dest="${latest_release_json_full_name}" usetimestamp="true"/>
+        <exec executable="${maven.executable}" failonerror="true">
+            <arg value="dependency:copy"/>
+            <arg value="-Dmaven.repo.local=${zserio_tutorial_java.download_dir}"/>
+            <arg value="-Dartifact=io.github.ndsev:zserio-runtime:LATEST"/>
+            <arg value="-DoutputDirectory=${zserio_tutorial_java.build_dir}"/>
+            <arg value="-Dmdep.stripVersion=true"/>
+        </exec>
 
-        <loadfile encoding="UTF-8" property="latest_zserio_version" srcFile="${latest_release_json_full_name}">
-            <filterchain>
-                <striplinebreaks/>
-                <tokenfilter>
-                    <replaceregex pattern='.*"tag_name"\s*:\s*"v([0-9\.]+)".*' replace="\1"/>
-                </tokenfilter>
-            </filterchain>
-        </loadfile>
-
-        <property name="github_https_download" value="https://github.com/ndsev/zserio/releases/download"/>
-        <property name="zserio_bin_zip_name" value="zserio-${latest_zserio_version}-bin.zip"/>
-        <property name="zserio_bin_zip_full_name"
-            value="${zserio_tutorial_java.download_dir}/${zserio_bin_zip_name}"/>
-        <get src="${github_https_download}/v${latest_zserio_version}/${zserio_bin_zip_name}"
-            dest="${zserio_bin_zip_full_name}" usetimestamp="true"/>
-        <unzip src="${zserio_bin_zip_full_name}" dest="${zserio_tutorial_java.download_dir}"/>
-
-        <property name="zserio_runtime_libs_zip_name" value="zserio-${latest_zserio_version}-runtime-libs.zip"/>
-        <property name="zserio_runtime_libs_zip_full_name"
-            value="${zserio_tutorial_java.download_dir}/${zserio_runtime_libs_zip_name}"/>
-        <get src="${github_https_download}/v${latest_zserio_version}/${zserio_runtime_libs_zip_name}"
-            dest="${zserio_runtime_libs_zip_full_name}" usetimestamp="true"/>
-        <unzip src="${zserio_runtime_libs_zip_full_name}" dest="${zserio_tutorial_java.download_dir}"/>
+        <exec executable="${maven.executable}" failonerror="true">
+            <arg value="dependency:copy"/>
+            <arg value="-Dmaven.repo.local=${zserio_tutorial_java.download_dir}"/>
+            <arg value="-Dartifact=io.github.ndsev:zserio:LATEST"/>
+            <arg value="-DoutputDirectory=${zserio_tutorial_java.build_dir}"/>
+            <arg value="-Dmdep.stripVersion=true"/>
+        </exec>
     </target>
 
-    <target name="update_zserio_runtime" depends="download_zserio">
-        <mkdir dir="${zserio_tutorial_java.runtime_dir}"/>
-        <copy todir="${zserio_tutorial_java.runtime_dir}" overwrite="true">
-            <fileset dir="${zserio_tutorial_java.download_dir}/runtime_libs/java"/>
-        </copy>
-    </target>
-
-    <target name="regenerate_java_sources" depends="update_zserio_runtime">
-        <taskdef name="zserio" classpath="${zserio_tutorial_java.download_dir}/ant_task/zserio_ant.jar"
-            classname="zserio.ant.ZserioTask"/>
-        <zserio srcPath="${zserio_tutorial_java.base_dir}" srcFile="tutorial.zs">
-            <arg name="java" value="${zserio_tutorial_java.src_dir}"/>
-            <classpath>
-                <fileset dir="${zserio_tutorial_java.download_dir}">
-                    <include name="*.jar"/>
-                </fileset>
-            </classpath>
-        </zserio>
+    <target name="regenerate_java_sources" depends="download_zserio">
+        <java jar="${zserio_tutorial_java.build_dir}/zserio.jar" failonerror="true" fork="true">
+            <arg value="tutorial.zs"/>
+            <arg value="-java"/>
+            <arg value="${zserio_tutorial_java.src_dir}"/>
+        </java>
     </target>
 </project>
