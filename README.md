@@ -19,7 +19,6 @@ If you want to build from source, please follow the
 Before we start, make sure you have the following components installed:
 
 - Java JDK
-- Apache Ant
 - Apache Maven
 
 ## Set up dev environment
@@ -28,13 +27,15 @@ Before we start, make sure you have the following components installed:
 > project's root folder and have a quick look to the schema `tutorial.zs`. Then, run the following commands:
 >
 > ```
-> ant download_zserio
-> javac -d build -cp build/zserio_runtime.jar src/Main.java src/**/*.java
+> mvn dependency:copy -Dmaven.repo.local="build/download" \
+>        -Dartifact=io.github.ndsev:zserio-runtime:LATEST \
+>        -DoutputDirectory="build" -Dmdep.stripVersion=true
+> javac -d build -cp build/zserio-runtime.jar src/Main.java src/**/*.java
 > ```
 >
 > Now, start to play with tutorial executable using the command:
 >
-> `java -cp build/zserio_runtime.jar:build Main`
+> `java -cp build/zserio-runtime.jar:build Main`
 
 We start with a common layout of our project/repo where we put all the source files into a `src` folder.
 For simplicity the zserio schema file stays in the project's root folder.
@@ -128,13 +129,14 @@ and reports errors and warnings. In addition, the zserio compiler generates code
 and may generate HTML documentation. For a complete overview of available options, please refer to the
 [Zserio Compiler User Guide](https://github.com/ndsev/zserio/blob/master/doc/ZserioUserGuide.md#zserio-compiler-user-guide).
 
-So let's generate some Java code. Because zserio compiler is not available in this repository, we have 
-prepared `build.xml` which will download the latest zserio compiler release together with corresponded Java
-runtime library from Maven central repository and generate Java code. So, it's enough just to run the following
-command:
+So let's generate some Java code. Because zserio compiler is not available in this repository, we must
+download the latest zserio compiler release together with corresponded Java runtime library from Maven central
+repository. For example, it's enough just to run the following command:
 
 ```
-ant
+mvn dependency:copy -Dmaven.repo.local="build/download" \
+        -Dartifact=io.github.ndsev:zserio:LATEST \
+        -DoutputDirectory="build" -Dmdep.stripVersion=true
 ```
 
 After download, you can find out the latest zserio compiler in directory `build` and regenerate
@@ -173,7 +175,7 @@ We now have everything ready to serialize and deserialize our data.
 Before we start programming, let's have compile our project:
 
 ```
-javac -d build -cp build/zserio_runtime.jar src/Main.java src/**/*.java
+javac -d build -cp build/zserio-runtime.jar src/Main.java src/**/*.java
 ```
 
 Then open up your favorite IDE and start using the zserio classes by importing the classes from the schema
