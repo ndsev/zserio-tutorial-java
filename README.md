@@ -183,8 +183,7 @@ and zserio runtime that we want to use.
 
 ```java
 import zserio.runtime.ZserioError;
-import zserio.runtime.io.FileBitStreamReader;
-import zserio.runtime.io.FileBitStreamWriter;
+import zserio.runtime.io.SerializeUtil;
 
 import tutorial.Employee;
 import tutorial.Language;
@@ -224,14 +223,11 @@ Don't forget to set Joe's skills:
 joe.setSkills(skills);
 ```
 
-After we have set all the fields, we have to declare a FileBitStreamWriter and write the stream to the file:
+After we have set all the fields, we have to serialize an employee Joe to the file:
 
 ```java
-final FileBitStreamWriter writer = new FileBitStreamWriter(employeeFile);
-
-/* serialize the object joe by passing the BitStreamWriter to its write() method */
-joe.write(writer);
-writer.close();
+/* serialize the object joe to the file */
+SerializeUtil.serializeToFile(joe, employeeFile);
 ```
 
 **Voila!** You have just serialized your first data with zserio.
@@ -257,18 +253,12 @@ boss.setBonus(10000);
 
 The rest is pretty similar. Check the code to see the rest.
 
-When deserializing the zserio bit stream, we start with reading the file using FileBitStreamReader declaration:
+When deserializing the zserio bit stream, we can call `deserializeFromFile` utility from runtime library.
+After this call all the fields within `employee` will be set.
 
 ```java
-final FileBitStreamReader reader = new FileBitStreamReader(employeeFile);
-```
-
-We declare an object of class Employee and deserialize the buffer with the help of the FileBitStreamReader we
-just created. After this call all the fields within `employee` will be set.
-
-```java
-final Employee employee = new Employee();
-employee.read(reader);
+/* deserialize the file to an Employee class */
+final Employee employee = SerializeUtil.deserializeFromFile(Employee.class, employeeFile);
 ```
 
 We can now access the filled employee object via the respective getters. We still need to check for optionals

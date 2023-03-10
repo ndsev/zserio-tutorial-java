@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import zserio.runtime.ZserioError;
-import zserio.runtime.io.FileBitStreamReader;
-import zserio.runtime.io.FileBitStreamWriter;
+import zserio.runtime.io.SerializeUtil;
 
 import tutorial.Employee;
 import tutorial.Language;
@@ -41,12 +40,8 @@ public class Main
         /* assign the zserio object array to object joe */
         joe.setSkills(skills);
 
-        /* declare a zserio FileBitStreamWriter */
-        final FileBitStreamWriter writer = new FileBitStreamWriter(employeeFile);
-
-        /* serialize the object joe by passing the BitStreamWriter to its write() method */
-        joe.write(writer);
-        writer.close();
+        /* serialize the object joe to the file */
+        SerializeUtil.serializeToFile(joe, employeeFile);
     }
 
     private static void writeBoss(File employeeFile) throws ZserioError, IOException
@@ -65,22 +60,14 @@ public class Main
         /* no programming skills for the boss, but a bonus! */
         boss.setBonus(10000);
 
-        /* declare a zserio FileBitStreamWriter */
-        final FileBitStreamWriter writer = new FileBitStreamWriter(employeeFile);
-
-        /* serialize the object boss by passing the BitStreamWriter to its write() method */
-        boss.write(writer);
-        writer.close();
+        /* serialize the object boss to the file */
+        SerializeUtil.serializeToFile(boss, employeeFile);
     }
 
     private static void readEmployee(File employeeFile) throws IOException
     {
-        /* declare the zserio FileBitStreamReader and assign the file to read from */
-        final FileBitStreamReader reader = new FileBitStreamReader(employeeFile);
-
-        /* deserialize the stream to an Employee class */
-        final Employee employee = new Employee();
-        employee.read(reader);
+        /* deserialize the file to an Employee class */
+        final Employee employee = SerializeUtil.deserializeFromFile(Employee.class, employeeFile);
 
         /* print out the contents of Employee */
         System.out.println("Name: " + employee.getName());
