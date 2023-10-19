@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ master ]
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'
 
 jobs:
   build_windows:
@@ -61,7 +63,7 @@ jobs:
     - name: Archive Zserio Java tutorial classes
       uses: actions/upload-artifact@v3
       with:
-        name: zserio-tutorial-java-windows
+        name: zserio-tutorial-java-${{matrix.os}}
         path: |
           build/*.class
           build/tutorial/*.class
