@@ -1,5 +1,13 @@
 # Zserio Java Quick Start Tutorial
 
+[![](https://github.com/ndsev/zserio-tutorial-java/actions/workflows/build_linux.yml/badge.svg)](https://github.com/ndsev/zserio-tutorial-java/actions/workflows/build_linux.yml)
+[![](https://github.com/ndsev/zserio-tutorial-java/actions/workflows/build_windows.yml/badge.svg)](https://github.com/ndsev/zserio-tutorial-java/actions/workflows/build_windows.yml)
+[![](https://img.shields.io/github/watchers/ndsev/zserio-tutorial-java.svg)](https://GitHub.com/ndsev/zserio-tutorial-java/watchers)
+[![](https://img.shields.io/github/forks/ndsev/zserio-tutorial-java.svg)](https://GitHub.com/ndsev/zserio-tutorial-java/network/members)
+[![](https://img.shields.io/github/stars/ndsev/zserio-tutorial-java.svg?color=yellow)](https://GitHub.com/ndsev/zserio-tutorial-java/stargazers)
+
+--------
+
 This Quick Start tutorial features code generation in Java. Go to the
 [Zserio C++ tutorial](https://github.com/ndsev/zserio-tutorial-cpp#zserio-c-quick-start-tutorial) or
 [Zserio Python tutorial](https://github.com/ndsev/zserio-tutorial-python#zserio-python-quick-start-tutorial) if

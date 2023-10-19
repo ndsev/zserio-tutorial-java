@@ -1,0 +1,63 @@
+name: Linux
+
+on:
+  push:
+    branches: [ master, '*-ci' ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build_linux:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: ["ubuntu-20.04", "ubuntu-22.04"]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 8
+
+    - name: Build Zserio Java tutorial
+      run: |
+        mvn dependency:copy -Dmaven.repo.local="build/download" \
+              -Dartifact=io.github.ndsev:zserio-runtime:LATEST \
+              -DoutputDirectory="build" -Dmdep.stripVersion=true
+        javac -d build -cp build/zserio-runtime.jar src/Main.java src/**/*.java
+
+    - name: Test Zserio Java tutorial
+      run: |
+        java -cp "build/zserio-runtime.jar:build" Main write_joe
+        java -cp "build/zserio-runtime.jar:build" Main read
+        java -cp "build/zserio-runtime.jar:build" Main write_boss
+        java -cp "build/zserio-runtime.jar:build" Main read
+
+    - name: Build Zserio Java tutorial (sources regeneration)
+      run: |
+        mvn dependency:copy -Dmaven.repo.local="build/download" \
+              -Dartifact=io.github.ndsev:zserio:LATEST \
+              -DoutputDirectory="build" -Dmdep.stripVersion=true
+        java -jar build/zserio.jar -java src tutorial.zs
+        javac -d build -cp build/zserio-runtime.jar src/Main.java src/**/*.java
+
+    - name: Test Zserio Java tutorial (sources regeneration)
+      run: |
+        java -cp "build/zserio-runtime.jar:build" Main write_joe
+        java -cp "build/zserio-runtime.jar:build" Main read
+        java -cp "build/zserio-runtime.jar:build" Main write_boss
+        java -cp "build/zserio-runtime.jar:build" Main read
+
+    - name: Archive Zserio Java tutorial classes
+      uses: actions/upload-artifact@v3
+      with:
+        name: zserio-tutorial-java-${{matrix.os}}
+        path: |
+          build/*.class
+          build/tutorial/*.class
