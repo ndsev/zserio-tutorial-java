@@ -57,7 +57,7 @@ jobs:
         java -cp "build/zserio-runtime.jar:build" Main read
 
     - name: Archive Zserio Java tutorial classes
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: zserio-tutorial-java-${{matrix.os}}
         path: |
