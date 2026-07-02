@@ -67,3 +67,11 @@ jobs:
         path: |
           build/*.class
           build/tutorial/*.class
+
+  keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: liskin/gh-workflow-keepalive@v1
