@@ -46,7 +46,7 @@ jobs:
         mvn dependency:copy -Dmaven.repo.local="build/download" \
               -Dartifact=io.github.ndsev:zserio:LATEST \
               -DoutputDirectory="build" -Dmdep.stripVersion=true
-        java -jar build/zserio.jar -java src tutorial.zs
+        java -jar build/zserio.jar -ignoreTimestamps -java src tutorial.zs
         javac -d build -cp build/zserio-runtime.jar src/Main.java src/**/*.java
 
     - name: Test Zserio Java tutorial (sources regeneration)
